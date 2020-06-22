@@ -2,7 +2,7 @@ package Level2;
 
 public class Program2 {
     public static void main(String[] args) {
-        String inputString = "9.53 8.12 0.00";
+        String inputString = "1.00 1.00 15.00";
         String[] input = inputString.split(" ");
 
         double wheelBase = Double.parseDouble(input[0]);

@@ -2,7 +2,7 @@ package Level2;
 
 public class Program2 {
     public static void main(String[] args) {
-        String inputString = "2.70 45.00 -34.00";
+        String inputString = "9.53 8.12 0.00";
         String[] input = inputString.split(" ");
 
         double wheelBase = Double.parseDouble(input[0]);
@@ -12,15 +12,20 @@ public class Program2 {
         double turnRadius = wheelBase / Math.sin(steeringAngle);
 
         // new output variables
-        double x, y, newDirection;
+        double x, y, angle;
 
-        newDirection = Math.abs(distance / turnRadius);
-        while(newDirection >= Math.PI * 2){
-            newDirection -= Math.PI * 2;
+        angle = distance / turnRadius;
+        while(angle >= Math.PI * 2){
+            angle -= Math.PI * 2;
+        }
+        while(angle < 0){
+            angle += Math.PI * 2;
         }
 
+        x = turnRadius - (turnRadius * Math.cos(angle));
+        y = turnRadius * Math.sin(angle);
 
-        System.out.printf("%.2f %.2f %.2f", 0.0, 0.0, Math.toDegrees(newDirection));
+        System.out.printf("%.2f %.2f %.2f", x, y, Math.toDegrees(angle));
     }
 
 }

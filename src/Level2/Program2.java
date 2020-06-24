@@ -9,6 +9,7 @@ public class Program2 {
         double distance = Double.parseDouble(input[1]);
         double steeringAngle = Double.parseDouble(input[2]);
         steeringAngle = Math.toRadians(steeringAngle);
+
         double turnRadius = wheelBase / Math.sin(steeringAngle);
 
         // new output variables

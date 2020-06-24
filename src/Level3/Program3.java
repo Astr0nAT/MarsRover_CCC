@@ -3,36 +3,53 @@ package Level3;
 public class Program3 {
 
     public static void main(String[] args) {
-        String inputString = "1.00 3 1.00 15.00 1.00 0.00 1.00 -15.00";
+        String inputString = "1.00 1 5.00 23.00";
         String[] input = inputString.split(" ");
 
         double wheelBase = Double.parseDouble(input[0]);
-        double currentX = 0;
-        double currentY = 0;
+        double absoluteX = 0;
+        double absoluteY = 0;
         double currentAngle = 0;
-        double x, y, angle, turnRadius;
+        double stageX, stageY, angle, turnRadius, tempX, tempY;
 
         for(int i = 0; i < Integer.parseInt(input[1]); i++){
-            System.out.println("Stage " + (i + 1));
             double distance = Double.parseDouble(input[2 + (i * 2)]);
             double steeringAngle = Double.parseDouble(input[3 + (i * 2)]);
             steeringAngle = Math.toRadians(steeringAngle);
 
-            x = 0;
-            y = 0;
+            if(steeringAngle == 0) {
+                stageX = distance * Math.cos(convertAngle(currentAngle));
+                stageY = distance * Math.sin(convertAngle(currentAngle));
+                angle = 0.0;
+            }
+            else{
+                turnRadius = wheelBase / Math.sin(steeringAngle);
+                angle = distance / turnRadius;
 
-            if(steeringAngle == 0){
-                x = distance * Math.cos(convertAngle(currentAngle));
-                y = distance * Math.sin(convertAngle(currentAngle));
+                tempX = turnRadius - (turnRadius * Math.cos(angle));
+                tempY = turnRadius * Math.sin(angle);
+
+                stageX = Math.cos(currentAngle) * tempX + Math.sin(currentAngle) * tempY;
+                stageY = -Math.sin(currentAngle) * tempX + Math.cos(currentAngle) * tempY;
+
             }
 
-            System.out.printf("%.2f%n", convertAngle(currentAngle));
-            System.out.printf("%.2f%n", currentAngle);
-            System.out.printf("%.2f%n", x);
-            System.out.printf("%.2f%n", y);
-            System.out.println();
+            absoluteX += stageX;
+            absoluteY += stageY;
+            currentAngle += angle;
 
         }
+
+        while(currentAngle >= Math.PI * 2){
+            currentAngle -= Math.PI * 2;
+        }
+        while(currentAngle < 0) {
+            currentAngle += Math.PI * 2;
+        }
+
+        System.out.printf("%.2f ", absoluteX);
+        System.out.printf("%.2f ", absoluteY);
+        System.out.printf("%.2f%n", Math.toDegrees(currentAngle));
 
     }
 

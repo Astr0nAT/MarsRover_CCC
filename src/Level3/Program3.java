@@ -31,36 +31,21 @@ public class Program3 {
 
                 stageX = Math.cos(currentAngle) * tempX + Math.sin(currentAngle) * tempY;
                 stageY = -Math.sin(currentAngle) * tempX + Math.cos(currentAngle) * tempY;
-
             }
 
             absoluteX += stageX;
             absoluteY += stageY;
             currentAngle += angle;
-
         }
 
-        while(currentAngle >= Math.PI * 2){
-            currentAngle -= Math.PI * 2;
-        }
-        while(currentAngle < 0) {
-            currentAngle += Math.PI * 2;
-        }
-
+        currentAngle = trimAngle(currentAngle);
         System.out.printf("%.2f ", absoluteX);
         System.out.printf("%.2f ", absoluteY);
         System.out.printf("%.2f%n", Math.toDegrees(currentAngle));
-
     }
 
     public static double convertAngle(double a){
-
-        while(a >= Math.PI * 2){
-            a -= Math.PI * 2;
-        }
-        while(a < 0) {
-            a += Math.PI * 2;
-        }
+        a = trimAngle(a);
 
         if(a <= Math.PI / 2){
             return Math.PI / 2 - a;
@@ -68,5 +53,15 @@ public class Program3 {
             return Math.toRadians(450) - a;
         }
 
+    }
+
+    public static double trimAngle(double a){
+        while(a >= Math.PI * 2){
+            a -= Math.PI * 2;
+        }
+        while(a < 0) {
+            a += Math.PI * 2;
+        }
+        return a;
     }
 }
